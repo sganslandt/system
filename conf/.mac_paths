@@ -1,0 +1,7 @@
+export PATH=$PATH:"~/Applications/play/"
+
+#export PATH=$PATH:"/Applications/typesafe-stack/bin"
+#export AKKA_HOME=/Applications/typesafe-stack/
+
+export JETTY_HOME=/Applications/jetty/
+
