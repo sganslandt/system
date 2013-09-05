@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for x in .[a-z]* ; do 
+  echo "### $x ###"
+  diff $x ~/$x
+  echo 
+done
+
