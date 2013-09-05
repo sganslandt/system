@@ -1,0 +1,18 @@
+[user]
+	name = Sebastian Ganslandt
+	email = sebastian@ganslandt.nu
+[core]
+	excludesfile = /Users/sg/.gitignore_global
+	editor = vim
+[color]
+	ui = true
+
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  type = cat-file -t
+  dump = cat-file -p
+

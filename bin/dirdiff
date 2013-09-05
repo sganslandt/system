@@ -1,0 +1,8 @@
+#!/bin/bash
+cd $1
+ls -R  > /tmp/dirdiff_1
+cd -
+cd $2
+ls -R > /tmp/dirdiff_2
+cd -
+diff /tmp/dirdiff_1 /tmp/dirdiff_2

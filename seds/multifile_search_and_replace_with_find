@@ -1,0 +1,2 @@
+find /home/bruno/old-friends -type f -exec sed -i 's/foo/bar/g' {} \;
+
