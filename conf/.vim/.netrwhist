@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/sebastian/code/casumo/Casumo-Engine/build'
+let g:netrw_dirhist_2='/Users/sebastian/code/casumo/Casumo-Engine/web/backoffice/build'
+let g:netrw_dirhist_3='/Users/sebastian'
+let g:netrw_dirhist_4='/Users/sebastian/code/sganslandt/AxonFramework/.git'
+let g:netrw_dirhist_5='/Users/sebastian/code/casumo/Casumo-Engine/scripts/esper/statements/contexts'
+let g:netrw_dirhist_6='/Users/sebastian/.m2'

@@ -1,20 +1,49 @@
-alias ls="ls -F"
+alias ls="ls -FG"
+alias ll='ls -l'
+alias l.='ls -d .*'
 alias d="ls -lG"
+
+alias ..='cd ..'
+alias .2='cd ../../'
+alias .3='cd ../../../'
+alias .4='cd ../../../../'
+alias .5='cd ../../../../'
+
+alias grep='grep --color=auto'
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+
+alias bc='bc -l'
+alias mkdir='mkdir -pv'
+
+alias diff='colordiff'
+alias now='date +"%T'
+
+alias vi=vim
+alias svi='sudo vi'
+alias edit='vim'
+
+alias ping='ping -c 5'
+alias fastping='ping -c 100 -s.2'
+
+alias df='df -H'
+alias du='du -ch'
+
+alias c='clear'
 
 alias gs='git status '
 alias ga='git add '
 alias gb='git branch '
 alias gc='git commit'
-alias gcm='git commit -m'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias go='git checkout '
 alias gcp='git cherry-pick'
 alias gk='gitk --all&'
 alias gx='gitx --all'
+alias gp='git pull'
 alias revert='git checkout -- '
 
 alias f="git diff"
 
 alias gr="./gradlew"
-
