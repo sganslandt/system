@@ -1,9 +1,8 @@
 #!/bin/sh
 
-#env=`uname`
-if ("$env" = "Linux"); then
+if [ "`uname`" = "Linux" ]; then
   alias ls="ls --color=auto -F"
-elif ("$env" = "Darwin"); then
+elif [ "`uname`" = "Darwin" ]; then
   alias ls="ls -FG"
 fi
 

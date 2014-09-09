@@ -45,9 +45,12 @@ shopt -s histappend
 PROMPT_COMMAND="$PROMPT_COMMAND ; history -a"
 
 shopt -s extglob
-shopt -s globstar
+if [ "`uname`" = "Linux" ] ; then
+   shopt -s globstar
+fi
 
 export IGNOREEOF=1
 
 source ~/.java_config
+
 
