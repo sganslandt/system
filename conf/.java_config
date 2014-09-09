@@ -1,4 +1,8 @@
-export JAVA_HOME=/opt/java
+if [ "`uname`" = "Linux" ]; then
+  export JAVA_HOME="/opt/java"
+elif [ "`uname`" = "Darwin" ]; then
+  export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home"
+fi
 export JAVA=$JAVA_HOME/bin/java
 export PATH=$PATH:$JAVA_HOME/bin
 
