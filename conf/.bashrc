@@ -15,21 +15,11 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-#function g() {
-#      local cmd=${1-s}
-#      shift
-#      git $cmd "$@"
-#}
-
-alias v=vagrant
-alias gs="git status | less -R"
-
 function grepl() {
   grep --color=always "$@" | less -R 
 }
 
 export CLICOLOR_FORCE=true
-alias less="less -R"
 
 function scp {
   command scp -pr "$@"
@@ -51,13 +41,13 @@ function g() {
       git $cmd "$@"
 }
 
-alias t="ssh -fN" 
-
 shopt -s histappend
 PROMPT_COMMAND="$PROMPT_COMMAND ; history -a"
 
-CDPATH=.:..:../..:/Users/sebastian
+shopt -s extglob
+shopt -s globstar
 
 export IGNOREEOF=1
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_45.jdk/Contents/Home
+source ~/.java_config
+

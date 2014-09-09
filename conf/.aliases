@@ -1,4 +1,12 @@
-alias ls="ls -FG"
+#!/bin/sh
+
+#env=`uname`
+if ("$env" = "Linux"); then
+  alias ls="ls --color=auto -F"
+elif ("$env" = "Darwin"); then
+  alias ls="ls -FG"
+fi
+
 alias ll='ls -l'
 alias l.='ls -d .*'
 alias d="ls -lG"
@@ -12,6 +20,8 @@ alias .5='cd ../../../../'
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+
+alias less="less -R"
 
 alias bc='bc -l'
 alias mkdir='mkdir -pv'
@@ -31,6 +41,7 @@ alias du='du -ch'
 
 alias c='clear'
 
+alias v=vagrant
 alias gs='git status '
 alias ga='git add '
 alias gb='git branch '
@@ -47,3 +58,4 @@ alias revert='git checkout -- '
 alias f="git diff"
 
 alias gr="./gradlew"
+alias t="ssh -fN" 
