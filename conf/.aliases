@@ -57,4 +57,12 @@ alias revert='git checkout -- '
 alias f="git diff"
 
 alias gr="./gradlew"
-alias t="ssh -fN" 
+
+function t() {
+  if [ -z "$1" ] ; then
+    ps aux | grep -e "[0-9] ssh -fN" | sort 
+  else
+    ssh -fN $1 
+  fi
+}
+
