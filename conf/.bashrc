@@ -1,56 +1,28 @@
 [[ ${-#*i} != ${-} ]] || return
 
-
-brew_prefix=/usr/local
-if [ -f $brew_prefix/etc/bash_completion ]; then
-  . $brew_prefix/etc/bash_completion
-fi  
-
 export PATH=$PATH:~/bin
 
+PROMPT_COMMAND="$PROMPT_COMMAND ; history -a"
 source ~/.bash_ps1
 source ~/.aliases
-
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
-fi
-
-function grepl() {
-  grep --color=always "$@" | less -R 
-}
+source ~/.java_config
 
 export CLICOLOR_FORCE=true
-
-function scp {
-  command scp -pr "$@"
-}
-function mkdir {
-  command mkdir -p "$@"
-}
-function ll {
-    command ls -Flh "$@"
-}
-export -f ll
-function s {
-  ps aux | grep "$@"
-}
-
-function g() {
-    local cmd=${1-s}
-      shift
-      git $cmd "$@"
-}
+export IGNOREEOF=1
 
 shopt -s histappend
-PROMPT_COMMAND="$PROMPT_COMMAND ; history -a"
-
 shopt -s extglob
 if [ "`uname`" = "Linux" ] ; then
    shopt -s globstar
 fi
 
-export IGNOREEOF=1
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
 
-source ~/.java_config
+brew_prefix=/usr/local
+if [ -f $brew_prefix/etc/bash_completion ]; then
+  . $brew_prefix/etc/bash_completion
+fi
 
-
+complete -C '/usr/local/bin/aws_completer' aws
