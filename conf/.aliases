@@ -6,6 +6,8 @@ elif [ "`uname`" = "Darwin" ]; then
   alias ls="ls -FG"
 fi
 
+alias fucking=sudo
+
 alias ll='ls -l'
 alias l.='ls -d .*'
 alias d="ls -lG"
@@ -32,9 +34,6 @@ alias vi=vim
 alias svi='sudo vi'
 alias edit='vim'
 
-alias ping='ping -c 5'
-alias fastping='ping -c 100 -s.2'
-
 alias df='df -H'
 alias du='du -ch'
 
@@ -43,8 +42,10 @@ alias c='clear'
 alias v=vagrant
 alias gs='git status '
 alias ga='git add '
-alias gb='git branch '
-alias gc='git commit'
+alias gat='git add -u'
+alias gaa='git add -A'
+alias gai='git add -i'
+alias gc='rm -f /tmp/commit-message ; touch /tmp/commit-message ; prepare-commit-msg /tmp/commit-message ; git commit --template=/tmp/commit-message'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias go='git checkout '
@@ -53,16 +54,81 @@ alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gp='git pull'
 alias revert='git checkout -- '
+alias git-clean-merged-branches='git branch --merged | egrep -v "(^\*|master)" | xargs git branch -d'
+alias git-prune-origin='git remote prune origin'
 
 alias f="git diff"
 
 alias gr="./gradlew"
+alias grcb="gr clean build"
+alias grcbr="gr clean build --refresh-dependencies"
+
+alias clear-dns-cache="fucking killall -HUP mDNSResponder"
 
 function t() {
   if [ -z "$1" ] ; then
-    ps aux | grep -e "[0-9] ssh -fN" | sort 
+    ps x | grep -e "[0-9] ssh -fN" | sort
+  elif [ "$1" = "kill" ] ; then
+    for x in `ps x | grep -e "[0-9] ssh -fN"  | sed "s/[ \t]//" | cut -d" " -f1` ; do kill $x ; done
   else
-    ssh -fN $1 
+    ssh -fN $1
   fi
 }
 
+function gb() {
+  if [ -z "$1" ]; then
+    git branch
+  else
+    git branch | grep $1
+  fi
+}
+
+alias docker-rmall="for x in `docker ps -a | tail +2 | cut -d' ' -f1` ; do docker rm $x ; done"
+alias doc=docker
+alias docc=docker-compose
+
+function deploy-test() {
+  ssh release.test "su release /home/release/bin/deploy-service $1 $2 $3"
+}
+
+function grepl() {
+  grep --color=always "$@" | less -R
+}
+
+function scp {
+  command scp -pr "$@"
+}
+
+function mkdir {
+  command mkdir -p "$@"
+}
+
+function ll {
+    command ls -Flh "$@"
+}
+
+function s {
+  ps aux | grep "$@"
+}
+
+function g() {
+    local cmd=${1-s}
+      shift
+      git $cmd "$@"
+}
+
+function aws-profile() {
+  if [ -z $1 ]; then
+    unset AWS_PROFILE
+    export RPROMPT=${RPROMPT/<aws:*> /}
+  else
+    export AWS_PROFILE=$1
+    export RPROMPT=${RPROMPT/<aws:*> /}
+    export RPROMPT="<aws:$AWS_PROFILE> $RPROMPT"
+  fi
+}
+
+function elastic-monitor() {
+  docker run -d -p 9000:9000 --name cerebro yannart/cerebro:latest
+  open http://localhost:9000
+}
