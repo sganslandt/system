@@ -1,24 +1,46 @@
 [user]
 	name = Sebastian Ganslandt
 	email = sebastian@ganslandt.nu
+	signingkey = 
+
 [core]
-	excludesfile = ~/.gitignore_global
-	editor = vim
+	excludesfile = /Users/sg/.gitignore_global
+	hooksPath = /Users/sg/.git/hooks/
+    editor = vim
+    #editor = atom --wait
 [color]
 	ui = true
-
 [alias]
   co = checkout
   ci = commit
   s = status
   st = stash
-  br = branch
+  br = branch -vv
+  f = fetch -p
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
   type = cat-file -t
   dump = cat-file -p
-
+  fuckit = reset --hard
+  update = pull --autostash --rebase
 [push]
   default = simple
-
 [branch]
   autosetuprebase = always
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[commit]
+	template = /Users/sebastian/.stCommitMsg
+	gpgsign = true
+[credential]
+	helper = !aws codecommit credential-helper $@
+	UseHttpPath = true
+[pager]
+	branch = false
+[gpg]
+	program = gpg
