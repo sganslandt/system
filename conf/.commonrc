@@ -1,0 +1,8 @@
+[[ ${-#*i} != ${-} ]] || return
+
+export PATH=$PATH:~/bin
+export PATH=$PATH:/Users/sg/Library/Python/3.7/bin
+export CLICOLOR_FORCE=true
+export IGNOREEOF=1
+
+source ~/.aliases

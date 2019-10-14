@@ -5,7 +5,6 @@ export PATH=$PATH:~/bin
 PROMPT_COMMAND="$PROMPT_COMMAND ; history -a"
 source ~/.bash_ps1
 source ~/.aliases
-source ~/.java_config
 
 export CLICOLOR_FORCE=true
 export IGNOREEOF=1
