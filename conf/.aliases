@@ -45,15 +45,16 @@ alias ga='git add '
 alias gat='git add -u'
 alias gaa='git add -A'
 alias gai='git add -i'
+alias gco='git co'
 alias gc='rm -f /tmp/commit-message ; touch /tmp/commit-message ; prepare-commit-msg /tmp/commit-message ; git commit --template=/tmp/commit-message'
 alias gd='git diff'
 alias gdc='git diff --cached'
-alias go='git checkout '
 alias gcp='git cherry-pick'
 alias gk='gitk --all&'
 alias gx='gitx --all'
 alias gp='git pull'
 alias revert='git checkout -- '
+alias gu='git stash ; git pull ; git stash pop'
 alias git-clean-merged-branches='git branch --merged | egrep -v "(^\*|master)" | xargs git branch -d'
 alias git-prune-origin='git remote prune origin'
 
@@ -63,7 +64,12 @@ alias gr="./gradlew"
 alias grcb="gr clean build"
 alias grcbr="gr clean build --refresh-dependencies"
 
+alias mvn="./mvnw"
+alias cloud="gcloud"
+
 alias clear-dns-cache="fucking killall -HUP mDNSResponder"
+
+alias idea="/Applications/IntelliJ\ IDEA.app/Contents/MacOS/idea" 
 
 function t() {
   if [ -z "$1" ] ; then
@@ -83,7 +89,7 @@ function gb() {
   fi
 }
 
-alias docker-rmall="for x in `docker ps -a | tail +2 | cut -d' ' -f1` ; do docker rm $x ; done"
+alias docker-rmall="for x in \`docker ps -a | tail +2 | cut -d' ' -f1\` ; do docker rm $x ; done"
 alias doc=docker
 alias docc=docker-compose
 
@@ -107,9 +113,9 @@ function ll {
     command ls -Flh "$@"
 }
 
-function s {
-  ps aux | grep "$@"
-}
+# function s {
+#  ps aux | grep "$@"
+# }
 
 function g() {
     local cmd=${1-s}
@@ -128,7 +134,55 @@ function aws-profile() {
   fi
 }
 
+function gcp-profile() {
+  if [ -z $1 ]; then
+    echo "Available configurations..."
+    gcloud config configurations list
+    gcp-profile default
+  else
+    gcloud config configurations activate $1
+    export RPROMPT=${RPROMPT/<gcp:*> /}
+    export RPROMPT="<gcp:$1> $RPROMPT"
+  fi
+}
+
 function elastic-monitor() {
   docker run -d -p 9000:9000 --name cerebro yannart/cerebro:latest
   open http://localhost:9000
+}
+
+
+function formatCbtOutput() {
+  head -4 | tail -1 | sed "s/\\\\\"/\"/g" | sed "s/    \"\(.*\)\"$/\1/" | jq 
+}
+
+function listMarkets() {
+   cbt -project ingka-rrm-cia-prod -instance availability read cbd | grep "^RU-" | sed "s/RU-//"
+}
+
+function listRiigMarkets() {
+   cbt -project ingka-rrm-cia-prod -instance availability read cbd | grep "THE INGKA GROUP" | sed "s/.*\\\\\"retailUnitCode\\\\\":\\\\\"\(..\).*/\1/g" | sort | uniq
+}
+
+function listRoigMarkets() {
+   cbt -project ingka-rrm-cia-prod -instance availability read cbd | grep '\\"retailUnitType\\":\\"RU\\"' | grep '\\"stores\\":null' | grep -v "THE INGKA GROUP" | sed "s/.*\\\\\"retailUnitCode\\\\\":\\\\\"\(..\).*/\1/g" | sort | uniq
+}
+
+function cloud-run-route() {
+  SERVICE=$1
+  REVISION=$2
+  PERCENT=$3
+
+  if [ -z $SERVICE ] || [ -z $REVISION ] || [ -z $PERCENT ]; then
+    echo "Usage $0 <service> <revision> <percent>"
+  fi
+
+  gcloud run services update-traffic --project=ingka-rrm-cia-prod --platform=managed --region=europe-west1 $SERVICE --to-revisions=$SERVICE-$REVISION=$PERCENT
+}
+
+function publishLocal() {
+  TYPE=$1
+  MSG=$2
+
+  curl -XPOST localhost:8080/pubsub/message/receive/$TYPE -d '{"message": {"data": "'$MSG'"}}'
 }

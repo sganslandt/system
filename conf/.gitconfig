@@ -1,15 +1,15 @@
 [user]
-	name = Sebastian Ganslandt
-	email = sebastian@ganslandt.nu
-	signingkey = 
+  name = Sebastian Ganslandt
+  email = sebastian.ganslandt@ingka.ikea.com
+  signingkey = E4A476512F11A283
 
 [core]
-	excludesfile = /Users/sg/.gitignore_global
-	hooksPath = /Users/sg/.git/hooks/
-    editor = vim
-    #editor = atom --wait
+  excludesfile = /Users/segan3/.gitignore_global
+  #hooksPath = /Users/segan3/.git/hooks/
+  editor = vim
+	pager = less -F -X
 [color]
-	ui = true
+  ui = true
 [alias]
   co = checkout
   ci = commit
@@ -27,20 +27,27 @@
 [branch]
   autosetuprebase = always
 [filter "media"]
-	required = true
-	clean = git media clean %f
-	smudge = git media smudge %f
+  required = true
+  clean = git media clean %f
+  smudge = git media smudge %f
 [filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
+  clean = git hawser clean %f
+  smudge = git hawser smudge %f
+  required = true
 [commit]
-	template = /Users/sebastian/.stCommitMsg
 	gpgsign = true
+  # gpgsign = true
+[credential "https://source.developers.google.com"]
+	helper = !gcloud auth git-helper --impersonate-service-account=cbd-source-reader@ingka-rrm-erix-test.iam.gserviceaccount.com --project=ingka-rrm-erix-test --ignore-unknown $@
 [credential]
-	helper = !aws codecommit credential-helper $@
-	UseHttpPath = true
-[pager]
-	branch = false
+	helper = osxkeychain
+#        UseHttpPath = true
 [gpg]
-	program = gpg
+  program = gpg
+
+[url "ssh://git@github.com/"]
+  insteadOf = https://github.com/
+
+[url "ssh://git@git.build.ingka.ikea.com/"]
+  insteadOf = https://git.build.ingka.ikea.com/
+
